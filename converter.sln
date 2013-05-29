@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "converter", "converter\converter.vcxproj", "{9E260C56-E16A-4B52-A327-6CC91A31A072}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E260C56-E16A-4B52-A327-6CC91A31A072}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9E260C56-E16A-4B52-A327-6CC91A31A072}.Debug|Win32.Build.0 = Debug|Win32
+		{9E260C56-E16A-4B52-A327-6CC91A31A072}.Release|Win32.ActiveCfg = Release|Win32
+		{9E260C56-E16A-4B52-A327-6CC91A31A072}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
