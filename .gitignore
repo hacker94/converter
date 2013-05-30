@@ -2,3 +2,5 @@
 /converter/Debug/*
 /converter/*.bmp
 /converter/*.txt
+/converter.sdf
+/converter.v11.suo
