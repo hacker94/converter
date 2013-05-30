@@ -1,5 +1,7 @@
 /Debug/*
 /converter/Debug/*
+/Release/*
+/converter/Release/*
 /converter/*.bmp
 /converter/*.txt
 /converter.sdf
