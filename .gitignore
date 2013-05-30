@@ -1,0 +1,4 @@
+/Debug/*
+/converter/Debug/*
+/converter/*.bmp
+/converter/*.txt

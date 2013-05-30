@@ -1,44 +1,53 @@
 #include <stdint.h>
 #include <Windows.h>
+#include <stdexcept>
 
 namespace Converter {
 	class Converter {
 	public :
 						Converter() {}
 						~Converter() {}
-		bool			Convert(char *bmpname, double zoom);
+		void			Convert(char *bmpname, double zoom);
+	
 	private :
-		bool			Openbitmap(char *bmpname);
+		void			Openbitmap(char *bmpname);
 		void			WriteASCII(FILE *output, RGBTRIPLE *pixels, double zoom);
 		RGBTRIPLE		MixColor(int y, int x, int zoomy, int zoomx);
-
+	
 		RGBTRIPLE		*pixels;
 		int				w, h;
 	};
-
-	bool Converter::Convert(char *bmpname, double zoom) {
-		if (Openbitmap(bmpname)) {
-			FILE *output;
-			fopen_s(&output, "out.txt", "w");
-			WriteASCII(output, pixels, zoom);
-			fclose(output);
-			return true;
-		} else {
-			return false;
+	
+	void Converter::Convert(char *bmpname, double zoom) {
+		Openbitmap(bmpname);
+		FILE *output;
+		if (fopen_s(&output, "out.txt", "w") != 0) {
+			throw std::exception("Cannot Create OutputFile!");
 		}
+		WriteASCII(output, pixels, zoom);
+		fclose(output);
+		return;
 	}
-
-	bool Converter::Openbitmap(char *bmpname) {
+	
+	void Converter::Openbitmap(char *bmpname) {
 		FILE *bmp;
-		fopen_s(&bmp, bmpname, "rb");
-
+		if (fopen_s(&bmp, bmpname, "rb") != 0) {
+			throw std::exception("Cannot Open Bmp!");
+		}
+	
 		BITMAPFILEHEADER bf;
 		BITMAPINFOHEADER bi;
 		fread(&bf, sizeof(bf), 1, bmp);
 		fread(&bi, sizeof(bi), 1, bmp);
+		if (bi.biBitCount != 24) {
+			throw std::exception("That's not a 24bit bmp!");
+		}
+		if (bi.biCompression != BI_RGB) {
+			throw std::exception("The bmp has been expressed!");
+		}
 		w = bi.biWidth;
 		h = bi.biHeight;
-
+	
 		pixels = new(RGBTRIPLE[w * h]);
 		int rowsize = (w * bi.biBitCount + 31) / 32 * 4; //bytes in one row
 		uint8_t *row = new(uint8_t[rowsize]);
@@ -50,11 +59,11 @@ namespace Converter {
 				pixels[(h - 1 - i) * w + j].rgbtRed = row[j * 3 + 2];
 			}
 		}
-
+	
 		fclose(bmp);
-		return true;
+		return;
 	}
-
+	
 	void Converter::WriteASCII(FILE* output, RGBTRIPLE *pixels, double zoom) {
 		char *dic = "M80V1;:*-. ";
 		double x = 0, y = 0;
@@ -68,7 +77,7 @@ namespace Converter {
 			fprintf(output, "\n");
 		}
 	}
-
+	
 	RGBTRIPLE Converter::MixColor(int y, int x, int zoomy, int zoomx) {
 		RGBTRIPLE color;
 		int r = 0, g = 0, b = 0, cnt = 0;
