@@ -20,10 +20,10 @@ int main() {
 	Converter::Converter conv;
 	try {
 		conv.Convert(bmpname, zoom);
+		printf("Convertion Success.");
 	} catch (std::exception e) {
 		printf(e.what());
 	}
-	printf("Convertion Success.");
 
 	system("pause");
 	return 0;

@@ -5,4 +5,5 @@
 /converter/*.bmp
 /converter/*.txt
 /converter.sdf
+/converter.opensdf
 /converter.v11.suo
